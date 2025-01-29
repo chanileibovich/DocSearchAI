@@ -15,7 +15,7 @@ import os
 load_dotenv()
 
 # INDEXING: LOAD
-loader = PyPDFLoader("./docs/family.pdf")
+loader = PyPDFLoader("./docs/club-tech.pdf")
 docs = loader.load()
 
 
