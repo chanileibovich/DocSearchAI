@@ -1,7 +1,6 @@
 import gradio as gr
 
-from files.backend import stream_rag_chain
-
+from backend import stream_rag_chain
 
 if __name__ == "__main__":
     with gr.Blocks(fill_height=True) as demo:

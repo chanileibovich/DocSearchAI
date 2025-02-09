@@ -15,19 +15,20 @@ import os
 load_dotenv()
 
 # INDEXING: LOAD
-loader = PyPDFLoader("./docs/club-tech.pdf")
+loader = PyPDFLoader("./docs/IT History.pdf")
 docs = loader.load()
 
 
 # INDEXING: SPLIT
 text_splitter = RecursiveCharacterTextSplitter(
-    chunk_size=1000, chunk_overlap=200, add_start_index=True
+    chunk_size=1000, chunk_overlap=30, add_start_index=True
 )
 all_splits = text_splitter.split_documents(docs)
 
 vectorstore = Chroma.from_documents(
         documents=all_splits,
         embedding=OpenAIEmbeddings(model="text-embedding-3-small"),
+        persist_directory='./my_chroma_db'
     )
 
 # RETRIEVAL AND GENERATION: RETRIEVAL
@@ -37,7 +38,7 @@ retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k
 # Let’s put it all together into a chain that takes a question,
 # retrieves relevant documents, constructs a prompt,
 # passes it into a model, and parses the output.
-open_ai_model = ChatOpenAI(model="gpt-3.5-turbo")
+open_ai_model = ChatOpenAI(model="gpt-4o")
 prompt = hub.pull("rlm/rag-prompt")
 
 
